@@ -44,8 +44,7 @@ export default function Home() {
   // https://github.com/mantinedev/mantine/blob/modal-base/docs/src/components/MdxPage/TableOfContents/TableOfContents.tsx
   //
   const containerRef = useRef(null);
-  const the1Ref = useRef(null);
-  const the2Ref = useRef(null);
+
   const { scrollIntoView: scrollIntoViewOne, targetRef: oneRef } =
     useScrollIntoView({
       offset: 200,
@@ -59,10 +58,10 @@ export default function Home() {
   const handleScroll = () => {
     const containerY = containerRef.current.getBoundingClientRect().top;
     const oneOffset = Math.abs(
-      oneRef.current.getBoundingClientRect().top // - containerY
+      oneRef.current.getBoundingClientRect().top - containerY
     );
     const twoOffset = Math.abs(
-      twoRef.current.getBoundingClientRect().top // - containerY
+      twoRef.current.getBoundingClientRect().top - containerY
     );
     // eslint-disable-next-line
     console.dir(`log changes, ${oneOffset}, ${twoOffset}, ${containerY} `);
@@ -134,6 +133,7 @@ export default function Home() {
         >
           {!largeScreen && (
             <Tabs
+              ref={containerRef} // д.б. неподвижен
               value={activeTab}
               onTabChange={setActiveTab}
               sx={{
@@ -170,7 +170,6 @@ export default function Home() {
             ...defaultStyle.main,
             ...defaultStyle.container,
           }}
-          ref={containerRef}
         >
           <Text
             span={true}
